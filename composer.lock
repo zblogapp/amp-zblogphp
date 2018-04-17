@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ba089deed679789ad09d6fa0c7fbea74",
+    "content-hash": "44f745206212deccb227e2941db92a26",
     "packages": [
         {
             "name": "fasterimage/fasterimage",

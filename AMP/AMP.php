@@ -3,6 +3,7 @@ namespace ZBlogPHP\AMP;
 
 use Lullabot\AMP\AMP as AMPFormatter;
 use ZBlogPHP\AMP\Cache\Cache;
+use Sabberworm\CSS\Parser;
 
 require_once dirname(__FILE__) . '/../simple_html_dom.php';
 require_once dirname(__FILE__) . '/../vendor/autoload.php';
@@ -72,9 +73,15 @@ class AMP {
     public function css () {
         $ret = array('');
         foreach ($this->styles as $key => $value) {
-            $ret[] = '.' . $key . '{' . $value . '}';
+            $ret[] = '.' . $key . '{' . html_entity_decode($value) . '}';
         }
-        return implode('', $ret);
+        $text = implode('', $ret);
+        $text = str_replace('!important', '', $text);
+        $text = TransferHTML($text, '[nohtml]');
+        $oCssParser = new \Sabberworm\CSS\Parser($text);
+        $oCssDocument = $oCssParser->parse();
+        $text = $oCssDocument->render();
+        return $text;
     }
 
     /**
@@ -173,7 +180,6 @@ class AMP {
         try {
             $images = $client->batch(array_keys($queue));
             foreach ($images as $key => $image) {
-                var_dump($image);
                 if ($image['size'] === 'failed') {
                     $queue[$key]->width = 500;
                     $queue[$key]->height = 500;
