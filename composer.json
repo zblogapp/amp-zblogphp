@@ -1,0 +1,6 @@
+{
+    "require": {
+        "lullabot/amp": "^1.0.0",
+        "fasterimage/fasterimage": "^1.2"
+    }
+}
